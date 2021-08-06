@@ -150,7 +150,7 @@ global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     const {deviceId, instance} = subscription;
     const ldevice = global.devices.find(d => d.data.id == deviceId);
     ldevice.updateState(`${message}`, instance);
-    console.log(preparePayload(ldevice));
+    console.log(JSON.stringify(preparePayload(ldevice)));
     sendStatus(preparePayload(ldevice));
 });
 
