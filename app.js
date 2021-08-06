@@ -100,8 +100,8 @@ function preparePayload(device) {
             "ts": Math.floor(Date.now()/1000),
             "devices": [{
                 "id":device.data.id,
-                "capabilities": device.capabilities,
-                "properties": device.properties
+                "capabilities": device.data.capabilities,
+                "properties": device.data.properties
             }]
         }
     }
