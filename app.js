@@ -16,10 +16,9 @@ const session = require('express-session');
 const passport = require('passport');
 /* mqtt client for devices */
 const mqtt = require('mqtt');
-const rp = require('request-promise');
 /* */
 const config = require('./config');
-const Device = require('./device').default;
+const Device = require('./device');
 
 app.engine('ejs', ejs.__express);
 app.set('view engine', 'ejs');
@@ -76,19 +75,6 @@ const credentials = {
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(config.https.port);
 
-/*function preparePayload(device) {
-    if ('data' in device){
-        return {
-            "ts": Math.floor(Date.now()/1000),
-            "devices": [{
-                "id":device.data.id,
-                "capabilities": device.capabilities,
-                "properties": device.properties
-            }]
-        }
-    }
-}*/
-
 /* cache devices from config to global */
 global.devices = [];
 if (config.devices) {
@@ -108,6 +94,18 @@ global.devices.forEach(device => {
     });
 });
 
+function preparePayload(device) {
+    if ('data' in device){
+        return {
+            "ts": Math.floor(Date.now()/1000),
+            "devices": [{
+                "id":device.data.id,
+                "capabilities": device.capabilities,
+                "properties": device.properties
+            }]
+        }
+    }
+}
 
 
 /* Create MQTT client (variable) in global */
@@ -122,10 +120,10 @@ global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
 }).on('message', (topic, message) => { /* on get message event handler */
     const subscription = subscriptions.find(sub => topic.toLowerCase() === sub.topic.toLowerCase());
     if (subscription == undefined) return;
+
     const {deviceId, instance} = subscription;
     const ldevice = global.devices.find(d => d.data.id == deviceId);
     ldevice.updateState(`${message}`, instance);
-  //  console.log(preparePayload(ldevice));
 });
 
 module.exports = app;
