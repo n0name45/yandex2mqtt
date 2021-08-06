@@ -239,7 +239,7 @@ class Device {
                         console.log(parsedBody)
                     })
                     .catch(function (err) {
-                        console.error('error sending data',typeof(err))
+                        console.error('error sending data',Object.keys(err))
                     }); 
             });
             
