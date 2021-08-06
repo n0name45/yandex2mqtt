@@ -129,8 +129,8 @@ function sendStatus(body){
             console.log(parsedBody)
         })
         .catch(function (err) {
-            let data =JSON.parse(err)
-            console.log('error  ',data.body)
+            let error =JSON.parse(err)
+            console.log('error  ',error.body)
         });
 }
 
