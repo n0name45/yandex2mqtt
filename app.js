@@ -113,7 +113,6 @@ global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     const ldevice = global.devices.find(d => d.data.id == deviceId);
     ldevice.updateState(`${message}`, instance);
     ldevice.updateYandexState();
-    console.log(JSON.stringify(global.authl))
 });
 
 module.exports = app;
