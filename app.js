@@ -130,7 +130,7 @@ function sendStatus(body){
         })
         .catch(function (err) {
             //let error =JSON.parse(err)
-            console.log('error  ',err.body)
+            console.log('error  ',err.request)
         });
 }
 
