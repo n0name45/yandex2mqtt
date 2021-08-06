@@ -19,7 +19,7 @@ const mqtt = require('mqtt');
 const rp = require('request-promise');
 /* */
 const config = require('./config');
-const Device = require('./device');
+const Device = require('./device').default;
 
 app.engine('ejs', ejs.__express);
 app.set('view engine', 'ejs');
@@ -82,6 +82,20 @@ if (config.devices) {
     config.devices.forEach(opts => {
         global.devices.push(new Device(opts));
     });
+}
+
+function preparePayload(device)
+{
+        if ('data' in device){
+            return {
+                "ts": Math.floor(Date.now()/1000),
+                "devices": [{
+                    "id":device.data.id,
+                    "capabilities": device.capabilities,
+                    "properties": device.properties
+                }]
+            }
+        }
 }
 
 /* create subscriptions array */

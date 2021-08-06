@@ -30,7 +30,8 @@
     "passport-http": "^0.3.0",
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
-    "passport-oauth2-client-password": "^0.1.2"
+    "passport-oauth2-client-password": "^0.1.2",
+    "request-promise": "^4.2.5"
   },
   "devDependencies": {
     "eslint": "^7.21.0",
