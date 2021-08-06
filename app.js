@@ -118,10 +118,10 @@ function sendStatus(body){
         headers: 
         { 
             'Content-Type': 'application/json',
-            'Authorization': 'Oauth AQAAAAAMYkA_AAT7o8PEt3FXxEdYhXhBcDN-hQI' 
+            'Authorization': 'OAuth AQAAAAAMYkA_AAT7o8PEt3FXxEdYhXhBcDN-hQI' 
         },
-        body: JSON.stringify(body)
-        //json: true // Automatically stringifies the body to JSON
+        body: body,
+        json: true // Automatically stringifies the body to JSON
     };
     
     rp(options)
