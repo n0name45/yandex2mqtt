@@ -54,7 +54,7 @@ module.exports.query = [
         };
 
         res.status(200).send(r);
-        console.log(r)
+        console.log(JSON.stringify(r))
     }
 ];
 
