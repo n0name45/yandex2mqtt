@@ -23,6 +23,7 @@ function convertToYandexValue(val, actType) {
     }
 }
 
+
 /* Device class defenition */
 class Device {
     constructor(options) {
@@ -203,4 +204,4 @@ class Device {
     }
 }
 
-export default Device;
+module.exports = Device;
