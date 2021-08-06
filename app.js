@@ -94,7 +94,7 @@ global.devices.forEach(device => {
         }
     });
 });
-
+/*
 function preparePayload(device) {
     if ('data' in device){
         return {
@@ -133,7 +133,7 @@ function sendStatus(body){
             console.log('error  ',err.request)
         });
 }
-
+*/
 /* Create MQTT client (variable) in global */
 global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     port: config.mqtt.port,
@@ -150,8 +150,7 @@ global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     const {deviceId, instance} = subscription;
     const ldevice = global.devices.find(d => d.data.id == deviceId);
     ldevice.updateState(`${message}`, instance);
-    console.log(JSON.stringify(preparePayload(ldevice)));
-    sendStatus(preparePayload(ldevice));
+    ldevice.updateYandexState();
 });
 
 module.exports = app;

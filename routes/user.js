@@ -54,7 +54,6 @@ module.exports.query = [
         };
 
         res.status(200).send(r);
-        console.log(JSON.stringify(r))
     }
 ];
 
@@ -83,7 +82,6 @@ module.exports.action = [
         };
 
         res.status(200).send(r);
-        console.log(JSON.stringify('action ',r))
     }
 ];
 

@@ -201,6 +201,44 @@ class Device {
             console.error(e);
         }
     }
+
+    /* Update device state in Yandex */
+    updateYandexState(){
+        const {id, capabilities, properties} = this.data;
+        try {
+            const body = {
+                "ts": Math.floor(Date.now()/1000),
+                "payload": {
+                    "user_id": '1',
+                    "devices": [{
+                        "id":id,
+                        "capabilities": capabilities,
+                        "properties": properties
+                    }]
+                }
+            }
+            var options = {
+                method: 'POST',
+                uri: 'https://dialogs.yandex.net/api/v1/skills/250f94a5-db0d-432d-b026-febf41a7d46b/callback/state',
+                headers: 
+                { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'OAuth AQAAAAAMYkA_AAT7o8PEt3FXxEdYhXhBcDN-hQI' 
+                },
+                body: body,
+                json: true // Automatically stringifies the body to JSON
+            };
+            rp(options)
+                .then(function (parsedBody) {
+                    console.log(parsedBody)
+                })
+                .catch(function (err) {
+                    console.error('error  ',err.request)
+                });
+        } catch(e){
+            console.error(e)
+        }
+    }
 }
 
 module.exports = Device;
