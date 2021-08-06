@@ -122,10 +122,10 @@ function sendStatus(body){
     
     rp(options)
         .then(function (parsedBody) {
-            console.log(JSON.parse(parsedBody).body)
+            console.log(JSON.parse(parsedBody))
         })
         .catch(function (err) {
-            console.log(JSON.parse(err).body)
+            console.log(JSON.parse(err))
         });
 }
 
