@@ -54,6 +54,7 @@ module.exports.query = [
         };
 
         res.status(200).send(r);
+        console.log(r)
     }
 ];
 
