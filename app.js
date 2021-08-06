@@ -116,8 +116,8 @@ function sendStatus(body){
             'Content-Type': 'application/json',
             'Authorization': 'Oauth AQAAAAAMYkA_AAT7o8PEt3FXxEdYhXhBcDN-hQI' 
         },
-        body: body,
-        json: true // Automatically stringifies the body to JSON
+        body: body
+        //json: true // Automatically stringifies the body to JSON
     };
     
     rp(options)
@@ -125,7 +125,7 @@ function sendStatus(body){
             console.log(parsedBody.body)
         })
         .catch(function (err) {
-            console.log(err)
+            console.log(err.body)
         });
 }
 
