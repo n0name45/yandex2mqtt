@@ -1,3 +1,5 @@
+const { user } = require('./routes');
+
 /* function for convert system values to Yandex (depends of capability or property type) */
 function convertToYandexValue(val, actType) {
     switch(actType) {
@@ -202,40 +204,46 @@ class Device {
         }
     }
 
-    /* Update device state in Yandex */
+    /* Update device state in Yandex for each user with token*/
     updateYandexState(){
         const {id, capabilities, properties} = this.data;
         const rp = require('request-promise');
         try {
-            const body = {
-                "ts": Math.floor(Date.now()/1000),
-                "payload": {
-                    "user_id": '1',
-                    "devices": [{
-                        "id":id,
-                        "capabilities": capabilities,
-                        "properties": properties
-                    }]
+            
+            const users = global.authl.data
+            users.forEach(user => {
+                const body = {
+                    "ts": Math.floor(Date.now()/1000),
+                    "payload": {
+                        "user_id": user.userId,
+                        "devices": [{
+                            "id":id,
+                            "capabilities": capabilities,
+                            "properties": properties
+                        }]
+                    }
                 }
-            }
-            var options = {
-                method: 'POST',
-                uri: `https://dialogs.yandex.net/api/v1/skills/${global.dialogs.skillId}/callback/state`,
-                headers: 
-                { 
-                    'Content-Type': 'application/json',
-                    'Authorization': 'OAuth ' + global.dialogs.dialogToken 
-                },
-                body: body,
-                json: true // Automatically stringifies the body to JSON
-            };
-            rp(options)
-                .then(function (parsedBody) {
-                    console.log(parsedBody)
-                })
-                .catch(function (err) {
-                    console.error('error  ',err.request)
-                });
+                var options = {
+                    method: 'POST',
+                    uri: `https://dialogs.yandex.net/api/v1/skills/${global.dialogs.skillId}/callback/state`,
+                    headers: 
+                    { 
+                        'Content-Type': 'application/json',
+                        'Authorization': 'OAuth ' + global.dialogs.dialogToken 
+                    },
+                    body: body,
+                    json: true // Automatically stringifies the body to JSON
+                };
+                rp(options)
+                    .then(function (parsedBody) {
+                        console.log(parsedBody)
+                    })
+                    .catch(function (err) {
+                        console.error('error  ',err.request)
+                    }); 
+            });
+            
+
         } catch(e){
             console.error(e)
         }
