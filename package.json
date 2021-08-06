@@ -1,6 +1,6 @@
 {
   "name": "yandex2mqtt",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "repository": "https://github.com/munrexio/yandex2mqtt.git",
   "license": "MIT",
   "contributors": [
