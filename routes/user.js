@@ -83,6 +83,7 @@ module.exports.action = [
         };
 
         res.status(200).send(r);
+        console.log(JSON.stringify('action ',r))
     }
 ];
 
