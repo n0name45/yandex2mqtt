@@ -14,6 +14,7 @@ const errorHandler = require('errorhandler');
 /* seesion and passport */
 const session = require('express-session');
 const passport = require('passport');
+const rp = require('request-promise');
 /* mqtt client for devices */
 const mqtt = require('mqtt');
 /* */
@@ -106,7 +107,27 @@ function preparePayload(device) {
         }
     }
 }
-
+function sendStatus(body){
+    var options = {
+        method: 'POST',
+        uri: 'https://dialogs.yandex.net/api/v1/skills/250f94a5-db0d-432d-b026-febf41a7d46b/callback/state',
+        headers: 
+        { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Oauth AQAAAAAMYkA_AAT7o8PEt3FXxEdYhXhBcDN-hQI' 
+        },
+        body: body,
+        json: true // Automatically stringifies the body to JSON
+    };
+    
+    rp(options)
+        .then(function (parsedBody) {
+            console.log(parsedBody)
+        })
+        .catch(function (err) {
+            console.log(err)
+        });
+}
 
 /* Create MQTT client (variable) in global */
 global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
@@ -125,6 +146,7 @@ global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     const ldevice = global.devices.find(d => d.data.id == deviceId);
     ldevice.updateState(`${message}`, instance);
     console.log(preparePayload(ldevice));
+    sendStatus(preparePayload(ldevice));
 });
 
 module.exports = app;
