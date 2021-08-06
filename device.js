@@ -205,6 +205,7 @@ class Device {
     /* Update device state in Yandex */
     updateYandexState(){
         const {id, capabilities, properties} = this.data;
+        const rp = require('request-promise');
         try {
             const body = {
                 "ts": Math.floor(Date.now()/1000),

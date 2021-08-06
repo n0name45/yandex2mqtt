@@ -14,7 +14,6 @@ const errorHandler = require('errorhandler');
 /* seesion and passport */
 const session = require('express-session');
 const passport = require('passport');
-const rp = require('request-promise');
 /* mqtt client for devices */
 const mqtt = require('mqtt');
 /* */
