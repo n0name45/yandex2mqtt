@@ -129,7 +129,7 @@ function sendStatus(body){
             console.log(parsedBody)
         })
         .catch(function (err) {
-            console.log(err)
+            console.log('error')
         });
 }
 
