@@ -76,7 +76,7 @@ const credentials = {
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(config.https.port);
 
-function preparePayload(device) {
+/*function preparePayload(device) {
     if ('data' in device){
         return {
             "ts": Math.floor(Date.now()/1000),
@@ -87,7 +87,7 @@ function preparePayload(device) {
             }]
         }
     }
-}
+}*/
 
 /* cache devices from config to global */
 global.devices = [];
@@ -125,7 +125,7 @@ global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     const {deviceId, instance} = subscription;
     const ldevice = global.devices.find(d => d.data.id == deviceId);
     ldevice.updateState(`${message}`, instance);
-    console.log(preparePayload(ldevice));
+  //  console.log(preparePayload(ldevice));
 });
 
 module.exports = app;
