@@ -16,6 +16,7 @@ const session = require('express-session');
 const passport = require('passport');
 /* mqtt client for devices */
 const mqtt = require('mqtt');
+const rp = require('request-promise');
 /* */
 const config = require('./config');
 const Device = require('./device');
@@ -94,6 +95,8 @@ global.devices.forEach(device => {
     });
 });
 
+
+
 /* Create MQTT client (variable) in global */
 global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     port: config.mqtt.port,
@@ -106,10 +109,10 @@ global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
 }).on('message', (topic, message) => { /* on get message event handler */
     const subscription = subscriptions.find(sub => topic.toLowerCase() === sub.topic.toLowerCase());
     if (subscription == undefined) return;
-
     const {deviceId, instance} = subscription;
     const ldevice = global.devices.find(d => d.data.id == deviceId);
     ldevice.updateState(`${message}`, instance);
+    console.log(preparePayload(ldevice));
 });
 
 module.exports = app;

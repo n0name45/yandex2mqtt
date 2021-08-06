@@ -23,6 +23,19 @@ function convertToYandexValue(val, actType) {
     }
 }
 
+function preparePayload(device) {
+    if ('data' in device){
+        return {
+            "ts": Math.floor(Date.now()/1000),
+            "devices": [{
+                "id":device.data.id,
+                "capabilities": device.capabilities,
+                "properties": device.properties
+            }]
+        }
+    }
+}
+
 /* Device class defenition */
 class Device {
     constructor(options) {
