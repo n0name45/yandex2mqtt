@@ -82,7 +82,9 @@ if (config.devices) {
         global.devices.push(new Device(opts));
     });
 }
-
+// load yandex token & skill id from config
+global.dialogs = {};
+(config.dialogs)?global.dialogs = config.dialogs:console.error('No yandex dialogs authorization data loaded. Check your config.js')
 /* create subscriptions array */
 const subscriptions = [];
 global.devices.forEach(device => {
@@ -93,46 +95,7 @@ global.devices.forEach(device => {
         }
     });
 });
-/*
-function preparePayload(device) {
-    if ('data' in device){
-        return {
-            "ts": Math.floor(Date.now()/1000),
-            "payload": {
-                "user_id": '1',
-                "devices": [{
-                    "id":device.data.id,
-                    "capabilities": device.data.capabilities,
-                    "properties": device.data.properties
-                }]
-            }
- 
-        }
-    }
-}
-function sendStatus(body){
-    var options = {
-        method: 'POST',
-        uri: 'https://dialogs.yandex.net/api/v1/skills/250f94a5-db0d-432d-b026-febf41a7d46b/callback/state',
-        headers: 
-        { 
-            'Content-Type': 'application/json',
-            'Authorization': 'OAuth AQAAAAAMYkA_AAT7o8PEt3FXxEdYhXhBcDN-hQI' 
-        },
-        body: body,
-        json: true // Automatically stringifies the body to JSON
-    };
-    
-    rp(options)
-        .then(function (parsedBody) {
-            console.log(parsedBody)
-        })
-        .catch(function (err) {
-            //let error =JSON.parse(err)
-            console.log('error  ',err.request)
-        });
-}
-*/
+
 /* Create MQTT client (variable) in global */
 global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     port: config.mqtt.port,
@@ -150,6 +113,7 @@ global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     const ldevice = global.devices.find(d => d.data.id == deviceId);
     ldevice.updateState(`${message}`, instance);
     ldevice.updateYandexState();
+    console.log(JSON.stringify(global.authl))
 });
 
 module.exports = app;

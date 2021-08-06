@@ -220,11 +220,11 @@ class Device {
             }
             var options = {
                 method: 'POST',
-                uri: 'https://dialogs.yandex.net/api/v1/skills/250f94a5-db0d-432d-b026-febf41a7d46b/callback/state',
+                uri: `https://dialogs.yandex.net/api/v1/skills/${global.dialogs.skillId}/callback/state`,
                 headers: 
                 { 
                     'Content-Type': 'application/json',
-                    'Authorization': 'OAuth AQAAAAAMYkA_AAT7o8PEt3FXxEdYhXhBcDN-hQI' 
+                    'Authorization': 'OAuth ' + global.dialogs.dialogToken 
                 },
                 body: body,
                 json: true // Automatically stringifies the body to JSON

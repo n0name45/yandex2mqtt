@@ -36,6 +36,10 @@ module.exports = {
             name: 'User',
         },
     ],
+    dialogs: {
+        skillId: '12345',
+        dialogToken:'asdfc'
+    },
 
     devices: [
         {
