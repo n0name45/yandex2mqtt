@@ -76,26 +76,25 @@ const credentials = {
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(config.https.port);
 
+function preparePayload(device) {
+    if ('data' in device){
+        return {
+            "ts": Math.floor(Date.now()/1000),
+            "devices": [{
+                "id":device.data.id,
+                "capabilities": device.capabilities,
+                "properties": device.properties
+            }]
+        }
+    }
+}
+
 /* cache devices from config to global */
 global.devices = [];
 if (config.devices) {
     config.devices.forEach(opts => {
         global.devices.push(new Device(opts));
     });
-}
-
-function preparePayload(device)
-{
-        if ('data' in device){
-            return {
-                "ts": Math.floor(Date.now()/1000),
-                "devices": [{
-                    "id":device.data.id,
-                    "capabilities": device.capabilities,
-                    "properties": device.properties
-                }]
-            }
-        }
 }
 
 /* create subscriptions array */
