@@ -116,7 +116,7 @@ function sendStatus(body){
             'Content-Type': 'application/json',
             'Authorization': 'Oauth AQAAAAAMYkA_AAT7o8PEt3FXxEdYhXhBcDN-hQI' 
         },
-        body: body
+        body: JSON.stringify(body)
         //json: true // Automatically stringifies the body to JSON
     };
     
