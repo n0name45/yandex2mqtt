@@ -129,7 +129,8 @@ function sendStatus(body){
             console.log(parsedBody)
         })
         .catch(function (err) {
-            console.log('error')
+            let data =JSON.parse(err)
+            console.log('error  ',data.body)
         });
 }
 
@@ -149,7 +150,7 @@ global.mqttClient = mqtt.connect(`mqtt://${config.mqtt.host}`, {
     const {deviceId, instance} = subscription;
     const ldevice = global.devices.find(d => d.data.id == deviceId);
     ldevice.updateState(`${message}`, instance);
-    console.log(preparePayload(ldevice));
+    console.log(preparePayload(JSON.stringify(ldevice)));
     sendStatus(preparePayload(ldevice));
 });
 
